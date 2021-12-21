@@ -38,7 +38,7 @@ class LoginController extends Controller
                         break; 
                 
                     default:
-                        return '/home'; 
+                        return '/'; 
                     break;
                 }
         }
@@ -47,20 +47,5 @@ class LoginController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ]);
     }
-
-    public function redirectTo() {
-        $role = Auth::user()->role; 
-        switch ($role) {
-          case 'admin':
-            return '/admin';
-            break;
-          case 'pelanggan':
-            return '/customer';
-            break; 
-      
-          default:
-            return '/home'; 
-          break;
-        }
-      }
+        
 }

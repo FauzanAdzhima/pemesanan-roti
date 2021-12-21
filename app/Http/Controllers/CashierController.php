@@ -16,7 +16,7 @@ class CashierController extends Controller
         $this->middleware('auth');
     }
 
-    public function index() {
+    public function index() {        
         $menu = Menu::latest()->get();
         $account = Cashier::where('email', Auth::user()->email)->get();
         foreach ($account as $acc) {            
@@ -26,9 +26,16 @@ class CashierController extends Controller
                 'name' => Auth::user()->name,
                 'image' => $acc->image
             ];
+
+            $status = $acc->status;
         }
-        
-        return view('cashier.dashboard', compact('menu'), $data);
+
+        if ($status == 'Aktif') {            
+            return view('cashier.dashboard', compact('menu'), $data);
+        } else {
+            session()->flush();
+            return view('cashier.deactivated');
+        }
     }
 
     public function profile() {        
@@ -36,12 +43,18 @@ class CashierController extends Controller
         $cashier_email = DB::table('cashiers')->select('id')->where('email', $auth_email)->get();
         foreach ($cashier_email as $cashmail) {            
             $cashier = Cashier::findOrFail($cashmail->id);
-        }        
-        $data = [
-            'page' => 'Cashier Profile',
-            'mode' => Auth::user()->role,
-            'name' => Auth::user()->name
-        ];
+        }
+
+        $account = Cashier::where('email', Auth::user()->email)->get();
+        foreach ($account as $acc) {            
+            $data = [
+                'page' => 'Profil Kasir',
+                'mode' => Auth::user()->role,
+                'name' => Auth::user()->name,
+                'image' => $acc->image
+            ];            
+        }
+        
         return view('cashier.profile', compact('cashier'), $data);        
     }
 
@@ -91,11 +104,17 @@ class CashierController extends Controller
         foreach ($cashier_email as $cashmail) {            
             $cashier = Cashier::findOrFail($cashmail->id);
         }         
-        $data = [
-            'page' => 'Cashier Profile',
-            'mode' => Auth::user()->role,
-            'name' => Auth::user()->name
-        ];
+        
+        $account = Cashier::where('email', Auth::user()->email)->get();
+        foreach ($account as $acc) {            
+            $data = [
+                'page' => 'Profil Kasir',
+                'mode' => Auth::user()->role,
+                'name' => Auth::user()->name,
+                'image' => $acc->image
+            ];
+        }
+
         return view('cashier.password', compact('cashier'), $data);
     }
 

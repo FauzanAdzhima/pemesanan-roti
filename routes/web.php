@@ -22,7 +22,10 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [LoginController::class, 'formLogin']);
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login-user', [LoginController::class, 'login']);
+Route::get('/session-timeout', function () {
+    return view('session-timeout');
+})->name('session-timeout');
 
 Route::resource('admin', AdminController::class)->middleware('role:admin');
 Route::get('/admin-profile', [AdminController::class, 'profile'])->name('admin-profile')->middleware('role:admin');
@@ -35,6 +38,7 @@ Route::get('/admin-logout', function () {
 })->name('admin-logout')->middleware('role:admin');
 
 Route::resource('cashier', CashierController::class)->middleware('role:kasir');
+Route::get('/menu-list', [CashierController::class, 'menu'])->name('daftar-menu')->middleware('role:kasir');
 Route::get('/cashier-profile', [CashierController::class, 'profile'])->name('cashier-profile')->middleware('role:kasir');
 Route::put('/cashier-update', [CashierController::class, 'profileEdit'])->name('cashier-update')->middleware('role:kasir');
 Route::get('/cashier-profile-pass', [CashierController::class, 'changePassword'])->name('cashier-profile-pass')->middleware('role:kasir');

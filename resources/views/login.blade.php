@@ -19,7 +19,7 @@
                             </p>
                         </div>
                         <div class="card-body">
-                            <form method="POST" action="/login">
+                            <form method="POST" action="/login-user">
                                 @csrf
                                                         
                                 <div class="form-floating mb-3">

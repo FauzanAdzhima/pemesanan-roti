@@ -77,5 +77,42 @@ class UsersTableSeeder extends Seeder
         Category::create([
             'nama' => 'Minuman'
         ]);
+
+        Menu::create([
+            'id' => '1',
+            'nama' => 'Nasi Goreng Biasa',
+            'category_id' => '3',
+            'harga' => 10000,            
+        ]);
+        Menu::create([
+            'id' => '2',
+            'nama' => 'Nasi Goreng Pataya',
+            'category_id' => '3',
+            'harga' => 15000,            
+        ]);
+        Menu::create([
+            'id' => '3',
+            'nama' => 'Kacang Rebus',
+            'category_id' => '3',
+            'harga' => 10000,            
+        ]);
+        Menu::create([
+            'id' => '4',
+            'nama' => 'Donat',
+            'category_id' => '1',
+            'harga' => 3000,            
+        ]);
+        Menu::create([
+            'id' => '5',
+            'nama' => 'Roti Kacang Merah',
+            'category_id' => '1',
+            'harga' => 3000,            
+        ]);
+        Menu::create([
+            'id' => '6',
+            'nama' => 'Cake Pisang',
+            'category_id' => '2',
+            'harga' => 5000,            
+        ]);        
       }
 }

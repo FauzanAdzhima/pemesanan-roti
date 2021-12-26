@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    use HasFactory;
+    use HasFactory;    
+
+    protected $fillable = [
+        'nama', 'category_id', 'deskripsi', 'harga', 'status', 'terjual', 'image'
+    ];    
+
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
 }

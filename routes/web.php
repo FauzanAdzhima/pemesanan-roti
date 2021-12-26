@@ -33,12 +33,16 @@ Route::put('/admin-update', [AdminController::class, 'profileEdit'])->name('admi
 Route::get('/admin-profile-pass', [AdminController::class, 'changePassword'])->name('admin-profile-pass')->middleware('role:admin');
 Route::put('/admin-pass-update', [AdminController::class, 'editPassword'])->name('admin-pass-update')->middleware('role:admin');
 Route::get('/admin-logout', function () {
-    session()->flush();    
+    session()->flush();
     return redirect('/');
 })->name('admin-logout')->middleware('role:admin');
 
 Route::resource('cashier', CashierController::class)->middleware('role:kasir');
-Route::get('/menu-list', [CashierController::class, 'menu'])->name('daftar-menu')->middleware('role:kasir');
+Route::get('/menu-list', [CashierController::class, 'menu'])->name('cashier-menu')->middleware('role:kasir');
+Route::post('/menu-save', [CashierController::class, 'menuSave'])->name('save-menu')->middleware('role:kasir');
+Route::delete('/menu-list/{menu}', [CashierController::class, 'menuDestroy'])->name('menu-destroy')->middleware('role:kasir');
+Route::get('/menu-list/{menu}/edit', [CashierController::class, 'menuEdit'])->name('edit-menu')->middleware('role:kasir');
+Route::put('/menu-list/{menu}', [CashierController::class, 'menuEditUpdate'])->name('update-menu')->middleware('role:kasir');
 Route::get('/cashier-profile', [CashierController::class, 'profile'])->name('cashier-profile')->middleware('role:kasir');
 Route::put('/cashier-update', [CashierController::class, 'profileEdit'])->name('cashier-update')->middleware('role:kasir');
 Route::get('/cashier-profile-pass', [CashierController::class, 'changePassword'])->name('cashier-profile-pass')->middleware('role:kasir');

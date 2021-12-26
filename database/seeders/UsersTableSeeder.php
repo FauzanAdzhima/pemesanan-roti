@@ -82,37 +82,62 @@ class UsersTableSeeder extends Seeder
             'id' => '1',
             'nama' => 'Nasi Goreng Biasa',
             'category_id' => '3',
-            'harga' => 10000,            
+            'harga' => 10000,
+            'status' => 'Tersedia',
+            'deskripsi' => 'Ini deskripsi menu',
+            'terjual' => 100,
+            'image' => 'menu-images/default-food.jpg'
+            
         ]);
         Menu::create([
             'id' => '2',
             'nama' => 'Nasi Goreng Pataya',
             'category_id' => '3',
-            'harga' => 15000,            
+            'harga' => 15000,
+            'status' => 'Tersedia',
+            'deskripsi' => 'Ini deskripsi menu',
+            'terjual' => 50,
+            'image' => 'menu-images/default-food.jpg'
         ]);
         Menu::create([
             'id' => '3',
             'nama' => 'Kacang Rebus',
             'category_id' => '3',
-            'harga' => 10000,            
+            'harga' => 10000,
+            'status' => 'Tersedia',
+            'deskripsi' => 'Ini deskripsi menu',
+            'terjual' => 20,
+            'image' => 'menu-images/default-food.jpg'
         ]);
         Menu::create([
             'id' => '4',
             'nama' => 'Donat',
             'category_id' => '1',
-            'harga' => 3000,            
+            'harga' => 3000,
+            'status' => 'Tersedia',
+            'deskripsi' => 'Ini deskripsi menu',
+            'terjual' => 10,
+            'image' => 'menu-images/default-food.jpg'
         ]);
         Menu::create([
             'id' => '5',
             'nama' => 'Roti Kacang Merah',
             'category_id' => '1',
-            'harga' => 3000,            
+            'harga' => 3000,
+            'status' => 'Tersedia',
+            'deskripsi' => 'Ini deskripsi menu',
+            'terjual' => 5,
+            'image' => 'menu-images/default-food.jpg'
         ]);
         Menu::create([
             'id' => '6',
             'nama' => 'Cake Pisang',
             'category_id' => '2',
-            'harga' => 5000,            
+            'harga' => 5000,
+            'status' => 'Tersedia',
+            'deskripsi' => 'Ini deskripsi menu',
+            'terjual' => 1,
+            'image' => 'menu-images/default-food.jpg'
         ]);        
       }
 }

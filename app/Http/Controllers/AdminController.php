@@ -17,7 +17,7 @@ class AdminController extends Controller
     }
 
     public function index() {
-        $cashier = Cashier::latest()->get();
+        $cashier = Cashier::get();
         $role = Auth::user()->role;
         $data = [
             'page' => 'Admin',
@@ -31,14 +31,12 @@ class AdminController extends Controller
     }
 
     public function store(Request $request) {        
-        // return $request->file('image')->store('public/cashier-images');
 
         $this->validate($request, [
             'nama' => 'required|string|max:20',
             'nik' => 'required|digits:12|unique:App\Models\Cashier,nik',
             'email' => 'required|email:dns|unique:App\Models\Cashier,email',
-            'image' => 'image|file|max:1024',
-            'password' => 'required|alpha-num|min:8'
+            'image' => 'image|file|max:1024',            
         ]);
 
         $image = '';
@@ -47,7 +45,7 @@ class AdminController extends Controller
             $image = $request->file('image')->store('cashier-images');
         }
 
-        $password = Hash::make($request->password);
+        $password = Hash::make('password');
 
         $cashier = Cashier::create([
             'nama' => $request->nama,
@@ -78,7 +76,7 @@ class AdminController extends Controller
     }
 
     public function edit($id) {
-        $cashier = Cashier::findOrFail($id);    
+        $cashier = Cashier::findOrFail($id);
         $role = Auth::user()->role;    
         $data = [
             'page' => 'Edit Kasir',
@@ -91,7 +89,7 @@ class AdminController extends Controller
         $this->validate($request, [
             'nama' => 'string|max:20',
             'nik' => 'digits:12',
-            'email' => 'email:dns',            
+            'email' => 'email:dns',
             'status' => ''
         ]);
 
@@ -102,12 +100,12 @@ class AdminController extends Controller
         $cashier->update([
             'nama' => $request->nama,
             'nik' => $request->nik,
-            'email' => $request->email,            
+            'email' => $request->email,
             'status' => $request->status
         ]);
 
         if ($cashier) {
-            foreach ($current_cashier as $currcash) {            
+            foreach ($current_cashier as $currcash) {
                 DB::table('users')->where('email', $currcash->email)->update([
                     'name' => $request->nama,
                     'email' => $request->email,

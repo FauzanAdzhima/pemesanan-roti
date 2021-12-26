@@ -75,8 +75,8 @@
                                                 <a href="{{ route('admin.index') }}" type="button" class="btn btn-secondary col-md-3">Back</a> 
                                             </div>
 
-                                        </div>
-                                    </form>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>

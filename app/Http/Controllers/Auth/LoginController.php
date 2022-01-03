@@ -11,7 +11,7 @@ class LoginController extends Controller
     public function formLogin() {
         $data = [
             'page' => 'Login',
-            'mode' => 'pelanggan'
+            'mode' => 'tamu'
         ];
         return view('login', $data);
     }

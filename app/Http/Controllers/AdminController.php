@@ -23,7 +23,7 @@ class AdminController extends Controller
             'page' => 'Admin',
             'mode' => $role
         ];
-        return view('admin.dashboard', compact('cashier'), $data);        
+        return view('admin.dashboard', compact('cashier'), $data);
     }
 
     public function create() {

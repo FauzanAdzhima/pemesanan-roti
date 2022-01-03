@@ -171,7 +171,7 @@ class CashierController extends Controller
         }        
     }
 
-    public function profile() {        
+    public function profile() {
         $auth_email = Auth::user()->email;
         $cashier_email = DB::table('cashiers')->select('id')->where('email', $auth_email)->get();
         foreach ($cashier_email as $cashmail) {            

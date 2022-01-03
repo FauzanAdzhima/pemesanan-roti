@@ -11,7 +11,7 @@
 <body>
     @php
         if(empty($mode)) {
-            $mode = 'pelanggan';
+            $mode = 'tamu';
         } else {
             $mode=$mode;
         }
@@ -20,16 +20,19 @@
         @case('pelanggan')
             @include('customer.navbar')
             @yield('container')
-            @break        
+            @break
+        @case('kasir')
+            @include('cashier.navbar')
+            @break
         @case('admin')
             @include('admin.navbar')
             @yield('container')
-            @break                  
+            @break
+        @case('tamu')
+            @include('customer.navbar')
+            @yield('container')
+            @break        
     @endswitch
-
-    @if ($mode == 'kasir')
-        @include('cashier.navbar')        
-    @endif
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 

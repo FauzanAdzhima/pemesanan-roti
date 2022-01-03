@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Customer;
 use App\Models\Cashier;
 use App\Models\Administrator;
 
@@ -62,6 +63,14 @@ class UsersTableSeeder extends Seeder
             'email' => 'sayapelanggan@gmail.com',
             'role' => 'pelanggan',
             'password' => $password,
+        ]);
+        Customer::create([
+            'nama' => 'Adzhima',
+            'alamat' => '',
+            'kontak' => '081234567890',
+            'email' => 'sayapelanggan@gmail.com',
+            'password' => $password,
+            'total_transaksi' => 0
         ]);
 
 

@@ -35,8 +35,8 @@
 
             <div class="card rounded mb-3 border-0">
                 <div class="card-body">
-                    <div class="container-fluid">                                                   
-                        <div class="row d-flex justify-content-center justify-items-center">                                                       
+                    <div class="container-fluid">
+                        <div class="row d-flex justify-content-center justify-items-center">
                             @forelse ($menu as $menus)
                             <div class="card mx-4 mb-3 text-center border-dark" style="width: 19rem;">
                                 <div class="card-body">
@@ -152,7 +152,7 @@
                         </div>
 
                         <div class="form-group form-floating mb-3">
-                            <textarea class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Leave a comment here" id="deskripsi" style="height: 100px" name="deskripsi" alue="{{ old('deskripsi') }}"></textarea>
+                            <textarea class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Leave a comment here" id="deskripsi" style="height: 100px" name="deskripsi" value="{{ old('deskripsi') }}"></textarea>
                             <label for="deskripsi">Deskripsi</label>
 
                             @error('deskripsi')
@@ -160,7 +160,7 @@
                                 {{ $message }}
                             </div>
                             @enderror
-                        </div>                        
+                        </div>
                         
                         <div class="input-group mb-2">
                             <input class="form-control" type="file" @error('image') is-invalid @enderror name="image" id="image"  onchange="previewImage()">

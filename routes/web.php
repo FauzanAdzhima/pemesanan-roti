@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +19,12 @@ use App\Http\Controllers\Auth\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('customer.dashboard');
-});
+Route::get('/', [GuestController::class, 'index']);
 
 Route::get('/login', [LoginController::class, 'formLogin']);
 Route::post('/login-user', [LoginController::class, 'login']);
+Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register-customer', [RegisterController::class, 'store']);
 Route::get('/session-timeout', function () {
     return view('session-timeout');
 })->name('session-timeout');
@@ -53,3 +55,12 @@ Route::get('/cashier-logout', function () {
 })->name('cashier-logout')->middleware('role:kasir');
 
 Route::resource('customer', CustomerController::class)->middleware('role:pelanggan');
+Route::get('/add-to-cart/{menu}', [CustomerController::class, 'addToCart'])->name('add-cart')->middleware('role:pelanggan');
+Route::get('/customer-profile', [CustomerController::class, 'profile'])->name('customer-profile')->middleware('role:pelanggan');
+Route::put('/customer-update', [CustomerController::class, 'profileEdit'])->name('customer-update')->middleware('role:pelanggan');
+Route::get('/customer-profile-pass', [CustomerController::class, 'changePassword'])->name('customer-profile-pass')->middleware('role:pelanggan');
+Route::put('/customer-profile-update', [CustomerController::class, 'editPassword'])->name('customer-pass-update')->middleware('role:pelanggan');
+Route::get('/customer-logout', function () {
+    session()->flush();
+    return redirect('/');
+})->name('customer-logout')->middleware('role:pelanggan');

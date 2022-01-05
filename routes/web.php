@@ -50,7 +50,7 @@ Route::put('/cashier-update', [CashierController::class, 'profileEdit'])->name('
 Route::get('/cashier-profile-pass', [CashierController::class, 'changePassword'])->name('cashier-profile-pass')->middleware('role:kasir');
 Route::put('/cashier-profile-update', [CashierController::class, 'editPassword'])->name('cashier-pass-update')->middleware('role:kasir');
 Route::get('/cashier-logout', function () {
-    session()->flush();    
+    session()->flush();
     return redirect('/');
 })->name('cashier-logout')->middleware('role:kasir');
 

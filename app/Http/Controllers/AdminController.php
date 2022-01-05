@@ -12,11 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
-    public function index() {
+    public function index()
+    {
         $cashier = Cashier::get();
         $role = Auth::user()->role;
         $data = [
@@ -26,22 +28,24 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('cashier'), $data);
     }
 
-    public function create() {
+    public function create()
+    {
         return view('admin.dashboard');
     }
 
-    public function store(Request $request) {        
+    public function store(Request $request)
+    {
 
         $this->validate($request, [
             'nama' => 'required|string|max:20',
             'nik' => 'required|digits:12|unique:App\Models\Cashier,nik',
             'email' => 'required|email:dns|unique:App\Models\Cashier,email',
-            'image' => 'image|file|max:1024',            
+            'image' => 'image|file|max:1024',
         ]);
 
         $image = '';
 
-        if($request->file('image')) {
+        if ($request->file('image')) {
             $image = $request->file('image')->store('cashier-images');
         }
 
@@ -67,7 +71,6 @@ class AdminController extends Controller
             return redirect()->route('admin.index')->with([
                 'success' => 'Data pegawai kasir berhasil ditambah!'
             ]);
-            
         } else {
             return redirect()->back()->withInput()->with([
                 'error' => 'Gagal menambah data pegawai kasir!'
@@ -75,9 +78,10 @@ class AdminController extends Controller
         }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $cashier = Cashier::findOrFail($id);
-        $role = Auth::user()->role;    
+        $role = Auth::user()->role;
         $data = [
             'page' => 'Edit Kasir',
             'mode' => $role
@@ -85,7 +89,8 @@ class AdminController extends Controller
         return view('admin.cashier_edit', compact('cashier'), $data);
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $this->validate($request, [
             'nama' => 'string|max:20',
             'nik' => 'digits:12',
@@ -121,13 +126,14 @@ class AdminController extends Controller
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $cashier = Cashier::findOrFail($id);
         $current_cashier = DB::table('cashiers')->select('email')->where('id', $id)->get();
         $cashier->delete();
 
         if ($cashier) {
-            foreach ($current_cashier as $currcash) {            
+            foreach ($current_cashier as $currcash) {
                 DB::table('users')->where('email', $currcash->email)->delete();
             }
 
@@ -141,7 +147,8 @@ class AdminController extends Controller
         }
     }
 
-    public function profile() {
+    public function profile()
+    {
         $admin = Administrator::findOrFail(1);
         $role = Auth::user()->role;
         $data = [
@@ -151,17 +158,18 @@ class AdminController extends Controller
         return view('admin.profile', compact('admin'), $data);
     }
 
-    public function profileEdit(Request $request) {
+    public function profileEdit(Request $request)
+    {
         $admin = Administrator::findOrFail(1);
         $this->validate($request, [
             'nama' => 'required|string|max:20',
             'nohp' => 'required|digits:12',
-            'email' => 'required|email:dns',            
+            'email' => 'required|email:dns',
         ]);
 
-        $current_admin = DB::table('administrators')->select('email')->where('id', 1)->get();                
+        $current_admin = DB::table('administrators')->select('email')->where('id', 1)->get();
 
-        if (Hash::check($request->password, Auth::user()->password)) {            
+        if (Hash::check($request->password, Auth::user()->password)) {
             $admin->update([
                 'nama' => $request->nama,
                 'nohp' => $request->nohp,
@@ -171,7 +179,7 @@ class AdminController extends Controller
 
         if (Hash::check($request->password, Auth::user()->password)) {
             if ($admin) {
-                foreach ($current_admin as $currad) {            
+                foreach ($current_admin as $currad) {
                     DB::table('users')->where('email', $currad->email)->update([
                         'name' => $request->nama,
                         'email' => $request->email,
@@ -184,13 +192,14 @@ class AdminController extends Controller
                 ]);
             }
         } else {
-                return redirect()->back()->with([
-                    'error' => 'Edit data admin gagal!'
-                ]);
+            return redirect()->back()->with([
+                'error' => 'Edit data admin gagal!'
+            ]);
         }
     }
 
-    public function changePassword() {
+    public function changePassword()
+    {
         $admin = Administrator::findOrFail(1);
         $role = Auth::user()->role;
         $data = [
@@ -200,26 +209,27 @@ class AdminController extends Controller
         return view('admin.password', compact('admin'), $data);
     }
 
-    public function editPassword(Request $request) {
+    public function editPassword(Request $request)
+    {
         $admin = Administrator::findOrFail(1);
-        $this->validate($request, [            
+        $this->validate($request, [
             'new_pass' => 'required|alpha-num|min:8|confirmed'
         ]);
 
         $current_admin = DB::table('administrators')->select('email')->where('id', 1)->get();
-        
+
         $new_pass = Hash::make($request->new_pass);
 
-        if (Hash::check($request->password, Auth::user()->password)) {            
-            $admin->update([                            
+        if (Hash::check($request->password, Auth::user()->password)) {
+            $admin->update([
                 'password' => $new_pass
             ]);
         }
 
         if (Hash::check($request->password, Auth::user()->password)) {
             if ($admin) {
-                foreach ($current_admin as $currad) {            
-                    DB::table('users')->where('email', $currad->email)->update([                        
+                foreach ($current_admin as $currad) {
+                    DB::table('users')->where('email', $currad->email)->update([
                         'password' => $new_pass
                     ]);
                 }
@@ -229,9 +239,9 @@ class AdminController extends Controller
                 ]);
             }
         } else {
-                return redirect()->route('admin-profile')->with([
-                    'error' => 'Edit data admin gagal!'
-                ]);
+            return redirect()->route('admin-profile')->with([
+                'error' => 'Edit data admin gagal!'
+            ]);
         }
-    }    
+    }
 }

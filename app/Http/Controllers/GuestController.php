@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class GuestController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $menu = Menu::get();
         $data = [
             'page' => 'Home',

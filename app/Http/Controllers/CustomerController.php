@@ -13,21 +13,24 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
-    }    
+    }
 
-    public function index() {
+    public function index()
+    {
         $menu = Menu::get();
         $data = [
             'page' => 'Home',
             'mode' => Auth::user()->role,
         ];
-        
+
         return view('customer.dashboard', compact('menu'), $data);
     }
 
-    public function profile() {
+    public function profile()
+    {
         $customer_email = DB::table('customers')->select('id')->where('email', Auth::user()->email)->get();
         foreach ($customer_email as $custmail) {
             $customer = Customer::findOrFail($custmail->id);
@@ -40,16 +43,17 @@ class CustomerController extends Controller
                 'mode' => Auth::user()->role
             ];
         }
-        
+
         return view('customer.profile', compact('customer'), $data);
     }
 
-    public function profileEdit(Request $request) {
+    public function profileEdit(Request $request)
+    {
         $customer_email = DB::table('customers')->select('id')->where('email', Auth::user()->email)->get();
         foreach ($customer_email as $custmail) {
             $customer = Customer::findOrFail($custmail->id);
         }
-        
+
         $this->validate($request, [
             'nama' => 'required|string|max:20',
             'kontak' => 'required|digits:12',
@@ -72,24 +76,25 @@ class CustomerController extends Controller
                     'name' => $request->nama,
                     'email' => $request->email,
                 ]);
-    
+
                 return redirect()->route('customer-profile')->with([
                     'success' => 'Edit data pelanggan berhasil!'
                 ]);
             } else {
-                    return redirect()->back()->with([
-                        'error' => 'Edit data pelanggan gagal!'
-                    ]);
+                return redirect()->back()->with([
+                    'error' => 'Edit data pelanggan gagal!'
+                ]);
             }
         }
     }
 
-    public function changePassword() {
+    public function changePassword()
+    {
         $customer_email = DB::table('customers')->select('id')->where('email', Auth::user()->email)->get();
         foreach ($customer_email as $custmail) {
             $customer = Customer::findOrFail($custmail->id);
         }
-        
+
         $account = Customer::where('email', Auth::user()->email)->get();
         foreach ($account as $acc) {
             $data = [
@@ -97,22 +102,23 @@ class CustomerController extends Controller
                 'mode' => Auth::user()->role
             ];
         }
-                
+
         return view('customer.password', compact('customer'), $data);
     }
 
-    public function editPassword(Request $request) {
+    public function editPassword(Request $request)
+    {
         $customer_email = DB::table('customers')->select('id')->where('email', Auth::user()->email)->get();
         foreach ($customer_email as $custmail) {
             $customer = Customer::findOrFail($custmail->id);
         }
-        
-        $this->validate($request, [            
+
+        $this->validate($request, [
             'new_pass' => 'required|alpha-num|min:8|confirmed'
         ]);
 
         $currcust_email = $customer->email;
-        $new_pass = Hash::make($request->new_pass);       
+        $new_pass = Hash::make($request->new_pass);
 
         if (Hash::check($request->password, Auth::user()->password)) {
             if ($customer) {
@@ -129,9 +135,9 @@ class CustomerController extends Controller
                 ]);
             }
         } else {
-                return redirect()->back()->with([
-                    'error' => 'Edit data pelanggan gagal!'
-                ]);
-        }    
+            return redirect()->back()->with([
+                'error' => 'Edit data pelanggan gagal!'
+            ]);
+        }
     }
 }

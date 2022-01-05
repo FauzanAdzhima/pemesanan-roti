@@ -20,7 +20,8 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run() {
+    public function run()
+    {
         $password = Hash::make('password');
 
         User::truncate();
@@ -57,7 +58,7 @@ class UsersTableSeeder extends Seeder
             'status' => 'Aktif'
         ]);
 
-        
+
         User::create([
             'name' => 'Adzhima',
             'email' => 'sayapelanggan@gmail.com',
@@ -96,7 +97,7 @@ class UsersTableSeeder extends Seeder
             'deskripsi' => 'Ini deskripsi menu',
             'terjual' => 100,
             'image' => 'menu-images/default-food.jpg'
-            
+
         ]);
         Menu::create([
             'id' => '2',
@@ -147,6 +148,6 @@ class UsersTableSeeder extends Seeder
             'deskripsi' => 'Ini deskripsi menu',
             'terjual' => 1,
             'image' => 'menu-images/default-food.jpg'
-        ]);        
-      }
+        ]);
+    }
 }
